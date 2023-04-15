@@ -101,7 +101,7 @@ The `main.py` script is organized into several parts:
 - Pandoc documentation: https://pandoc.org/documentation.html
 
 ## Contributing
-Contributions are always welcome! If you'd like to contribute to this project or have any suggestions, feel free to create a new issue or submit a pull request. Please check the [Code of Conduct](./CODE_OF_CONDUCT.md) first.
+Contributions are always welcome! If you'd like to contribute to this project or have any suggestions, feel free to create a new issue or submit a pull request. Please check the [Code of Conduct](./../CODE_OF_CONDUCT.md) first.
 
 To submit a pull request, follow these steps:
 1. Fork the repository
@@ -112,7 +112,7 @@ To submit a pull request, follow these steps:
 
 ## License
 
-This project is open-source and available under the [MIT License](./LICENSE.md).
+This project is open-source and available under the [MIT License](./../LICENSE.md).
 
 ## Support
 If you have any questions or need help getting started, please open an issue in the repository or contact me on Twitter: @tanja_codes
