@@ -11,6 +11,16 @@ def get_input(prompt, default=None):
     result = input(f"{prompt} (default: {default}): ")
     return result.strip() or default
 
+# Function to get output file name with the correct extension
+def get_output_file_name(prompt, default, extension):
+    while True:
+        result = input(f"{prompt} (default: {default}): ").strip()
+        if not result:
+            return default
+        if os.path.splitext(result)[1] == extension:
+            return result
+        print(f"Error: The output file extension must be {extension}. Please try again.")
+
 # Get working directory and change to it
 while True:
     working_dir = get_input("Enter the working directory", os.getcwd())
@@ -52,12 +62,13 @@ def is_valid_pdf(file_path):
 combined_any_files = False
 
 # Combine CSV and Excel files
-for ext, output_file in [('csv', 'combined_csv.csv'), ('xlsx', 'combined_excel.xlsx')]:
+for ext, default_output_file in [('csv', 'combined_csv.csv'), ('xlsx', 'combined_excel.xlsx')]:
     if file_type != "all" and file_type != ext:
         continue
     all_filenames = filter_files([i for i in glob.glob(f'*.{ext}')])
     if not all_filenames:
         continue
+    output_file = get_output_file_name(f"Enter the output {ext} file name", default_output_file, f".{ext}")
     combined_data = pd.concat([pd.read_csv(f) if ext == 'csv' else pd.read_excel(f) for f in all_filenames])
     output_path = os.path.join(output_dir, output_file)
     if ext == 'csv':
@@ -73,18 +84,20 @@ if file_type in ["all", "pdf"]:
         pdf_merger = PdfMerger()
         for pdf_file in pdf_files:
             pdf_merger.append(pdf_file)
-        output_pdf_path = os.path.join(output_dir, "combined_pdf.pdf")
+        output_pdf_file = get_output_file_name("Enter the output PDF file name", "combined_pdf.pdf", ".pdf")
+        output_pdf_path = os.path.join(output_dir, output_pdf_file)
         with open(output_pdf_path, "wb") as output_pdf:
             pdf_merger.write(output_pdf)
         combined_any_files = True
 
 # Combine Word and LibreOffice Writer files
-for ext, output_file in [('docx', 'combined_word.docx'), ('odt', 'combined_writer.odt')]:
+for ext, default_output_file in [('docx', 'combined_word.docx'), ('odt', 'combined_writer.odt')]:
     if file_type != "all" and file_type != ext:
         continue
     all_filenames = filter_files([i for i in glob.glob(f'*.{ext}')])
     if not all_filenames:
         continue
+    output_file = get_output_file_name(f"Enter the output {ext} file name", default_output_file, f".{ext}")
     shutil.copy(all_filenames[0], output_file)
     for doc_file in all_filenames[1:]:
         os.system(f'pandoc {doc_file} -t {ext} -o temp.{ext}')
