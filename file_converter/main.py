@@ -16,6 +16,10 @@ def convert_image(input_file, output_format):
             f.write(img2pdf.convert(input_file))
     else:
         im = Image.open(input_file)
+        
+        if output_format.lower() in ["jpeg", "eps"] and im.mode == "RGBA":
+            im = im.convert("RGB")
+        
         im.save(output_file, output_format.upper())
 
 def main():
