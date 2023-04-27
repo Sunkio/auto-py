@@ -19,8 +19,11 @@ def convert_image(input_file, output_format):
         
         if output_format.lower() in ["jpeg", "eps"] and im.mode == "RGBA":
             im = im.convert("RGB")
-        
-        im.save(output_file, output_format.upper())
+
+        if output_format.lower() == "jpeg":
+            im.save(output_file, output_format.upper(), quality=95)
+        else:
+            im.save(output_file, output_format.upper())
 
 def main():
     formats = ["png", "jpeg", "pdf", "eps"]
