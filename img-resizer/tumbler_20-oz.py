@@ -1,11 +1,15 @@
 from PIL import Image
 import os
 
-source_folder = "/home/tanja/gen_pop-mac-new/hustle/pod-designs/1_Tumbler-Designs/new-upscale-cyber-punk/toTumble"
-output_folder = "/home/tanja/gen_pop-mac-new/hustle/pod-designs/1_Tumbler-Designs/new-upscale-cyber-punk/tumbled"
+print("Welcome to the Skinny Tumbler Image Processor!")
+
+source_folder = input("Please enter the path to the source folder: ").strip()
+output_folder = input("Please enter the path to the output folder: ").strip()
 
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
+
+print("Processing images...")
 
 for file in os.listdir(source_folder):
     if file.endswith((".png", ".jpg", ".jpeg")):
@@ -18,11 +22,9 @@ for file in os.listdir(source_folder):
         target_ratio = 2790 / 2460
 
         if source_image_ratio < target_ratio:
-            # Source image is taller, so resize based on width
             new_width = 2790
             new_height = int(2790 / source_image_ratio)
         else:
-            # Source image is wider, so resize based on height
             new_width = int(2460 * source_image_ratio)
             new_height = 2460
 
@@ -40,7 +42,9 @@ for file in os.listdir(source_folder):
 
         # TAPERED Skinny Tumbler
         tapered_template = Image.open("tapered_template-20-oz.png").convert("RGBA")
-        mask = tapered_template.split()[3]  # Use the alpha channel of the tapered template as a mask
+        mask = tapered_template.split()[3]
         tapered_image = Image.composite(straight_image.convert("RGBA"), tapered_template, mask)
         tapered_image.info["dpi"] = (300, 300)
         tapered_image.save(os.path.join(output_folder, f"{file_name}_TAPERED-Skinny-Tumbler.png"))
+
+print("Image processing complete!")
