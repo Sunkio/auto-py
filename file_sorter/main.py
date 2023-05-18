@@ -1,6 +1,7 @@
 import os
 import shutil
 import sys
+import re
 
 def create_destination_directory(file_prefix, destination):
     directory_path = os.path.join(destination, file_prefix)
@@ -8,16 +9,23 @@ def create_destination_directory(file_prefix, destination):
         os.makedirs(directory_path)
     return directory_path
 
+def extract_prefix(file_name):
+    match = re.match(r"([A-Za-z]+[0-9]+)", file_name)
+    if match:
+        return match.group(1)
+    return None
+
 def sort_files(source_directories, destination):
     for source in source_directories:
         for root, _, files in os.walk(source):
             for file in files:
-                file_prefix = file.split('.')[0]
-                dest_directory = create_destination_directory(file_prefix, destination)
-                source_path = os.path.join(root, file)
-                dest_path = os.path.join(dest_directory, file)
-                shutil.copy2(source_path, dest_path)
-                print(f'Processed file: {file}')
+                file_prefix = extract_prefix(file)
+                if file_prefix:
+                    dest_directory = create_destination_directory(file_prefix, destination)
+                    source_path = os.path.join(root, file)
+                    dest_path = os.path.join(dest_directory, file)
+                    shutil.copy2(source_path, dest_path)
+                    print(f'Processed file: {file}')
 
 def main():
     if len(sys.argv) < 3:

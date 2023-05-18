@@ -29,19 +29,19 @@ def process_images(width, height, oz_suffix):
             )
             straight_image.paste(source_image_resized, straight_position)
             straight_image.info["dpi"] = (300, 300)
-            straight_image.save(os.path.join(output_folder, f"{file_name}_STRAIGHT-{oz_suffix}.png"))
+            straight_image.save(os.path.join(output_folder, f"{file_name}_STRAIGHT-Skinny-Tumbler_{oz_suffix}.png"))
 
             # TAPERED Skinny Tumbler
             tapered_template = Image.open(f"tapered_template-{oz_suffix}.png").convert("RGBA")
             mask = tapered_template.split()[3]
             tapered_image = Image.composite(straight_image.convert("RGBA"), tapered_template, mask)
             tapered_image.info["dpi"] = (300, 300)
-            tapered_image.save(os.path.join(output_folder, f"{file_name}_TAPERED-{oz_suffix}.png"))
+            tapered_image.save(os.path.join(output_folder, f"{file_name}_TAPERED-Skinny-Tumbler_{oz_suffix}.png"))
 
             # Upscale source file to 300 DPI
             source_image_upscaled = source_image.copy()
             source_image_upscaled.info["dpi"] = (300, 300)
-            source_image_upscaled.save(os.path.join(output_folder, f"{file_name}_square-pattern.png"))
+            source_image_upscaled.save(os.path.join(output_folder, f"{file_name}_square-pattern_4096x4096.png"))
 
 print("Welcome to the Skinny Tumbler Image Processor!")
 
