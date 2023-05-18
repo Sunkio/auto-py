@@ -4,3 +4,6 @@
 
 # Temp files
 **/done
+
+# Environments
+**/venv
