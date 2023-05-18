@@ -1,10 +1,9 @@
 import os
-import argparse
 
-def rename_folders(start_skd, end_skd, append_str, source_dir):
-    start_num = int(start_skd[2:])
-    end_num = int(end_skd[2:])
-    prefix = start_skd[:2]
+def rename_folders(start_sku, end_sku, append_str, source_dir):
+    start_num = int(start_sku[2:])
+    end_num = int(end_sku[2:])
+    prefix = start_sku[:2]
     count = 0
 
     for folder_num in range(start_num, end_num + 1):
@@ -19,13 +18,13 @@ def rename_folders(start_skd, end_skd, append_str, source_dir):
     return count
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Rename folders based on given start and end skd and string to append.")
-    parser.add_argument("start_skd", help="The skd of the folder to start with")
-    parser.add_argument("end_skd", help="The skd of the folder to end with (inclusive)")
-    parser.add_argument("append_str", help="The string to append to the folder name")
-    parser.add_argument("-s", "--source", dest="source_dir", default=".", help="The source directory where the folders to rename are located (default: current directory)")
+    start_sku = input("Enter the start SKU: ")
+    end_sku = input("Enter the end SKU (inclusive): ")
+    append_str = input("Enter the string to append to the folder name: ")
+    source_dir = input("Enter the source directory (leave empty for current directory): ")
 
-    args = parser.parse_args()
+    if not source_dir:
+        source_dir = "."
 
-    renamed_count = rename_folders(args.start_skd, args.end_skd, args.append_str, args.source_dir)
+    renamed_count = rename_folders(start_sku, end_sku, append_str, source_dir)
     print(f"Job completed. {renamed_count} folders have been renamed.")
