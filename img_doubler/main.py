@@ -17,12 +17,13 @@ def process_images(source_folder, output_folder):
     for file_name in os.listdir(source_folder):
         if file_name.endswith('.png'):
             source_file_path = os.path.join(source_folder, file_name)
-            output_file_path = os.path.join(output_folder, os.path.splitext(file_name)[0] + '_doubled.png')
+            output_file_path = os.path.join(output_folder, os.path.splitext(file_name)[0] + '_DOUBLED.png')
             doubled_img = double_image_horizontal(source_file_path)
             doubled_img.save(output_file_path)
 
 if __name__ == "__main__":
     source_folder = input("Enter the source folder path: ")
     output_folder = input("Enter the output folder path: ")
+    print("Images are being processed...")
     process_images(source_folder, output_folder)
     print("Images processed successfully.")
