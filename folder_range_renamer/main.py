@@ -18,13 +18,22 @@ def rename_folders(start_sku, end_sku, append_str, source_dir):
     return count
 
 if __name__ == "__main__":
-    start_sku = input("Enter the start SKU: ")
-    end_sku = input("Enter the end SKU (inclusive): ")
-    append_str = input("Enter the string to append to the folder name: ")
     source_dir = input("Enter the source directory (leave empty for current directory): ")
-
     if not source_dir:
         source_dir = "."
 
-    renamed_count = rename_folders(start_sku, end_sku, append_str, source_dir)
-    print(f"Job completed. {renamed_count} folders have been renamed.")
+    while True:
+        print("")  # Add an empty line for better readability
+        start_sku = input("Enter the start SKU (leave empty to exit): ").strip()
+        if not start_sku:
+            break
+
+        end_sku = input("Enter the end SKU (inclusive): ").strip()
+        append_str = input("Enter the string to append to the folder name: ").strip()
+
+        new_source_dir = input(f"Enter a new source directory or press Enter to use the same directory ({source_dir}): ").strip()
+        if new_source_dir:
+            source_dir = new_source_dir
+
+        renamed_count = rename_folders(start_sku, end_sku, append_str, source_dir)
+        print(f"Job completed. {renamed_count} folders have been renamed.")
